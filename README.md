@@ -23,3 +23,9 @@ console.log starts with time.
 
 ### fileByLines(file, cbLine)
 Call cbLine() every lines of the file, return promise.
+
+### \*traverseDir(parent)
+Traverse a folder recursively.
+```js
+for (const f of traverseDir('FOLDER')) console.log(f);
+```

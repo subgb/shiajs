@@ -1,3 +1,5 @@
+const fs = require('fs');
+const PATH = require('path');
 const crypto = require('crypto');
 const readline = require('readline');
 
@@ -11,6 +13,7 @@ module.exports = {
 	timeiso,
 	$log,
 	fileByLines,
+	traverseDir,
 };
 
 
@@ -75,4 +78,15 @@ function fileByLines(file, cbLine) {
 	return new Promise(resolve => {
 		rl.on('close', resolve);
 	});
+}
+
+function *traverseDir(parent) {
+	const files = fs.readdirSync(parent);
+	for (const name of files) {
+		const path = PATH.join(parent, name);
+		const stat = fs.lstatSync(path);
+		const isdir = stat.isDirectory();
+		yield {path, name, isdir, parent};
+		if (isdir) yield *traverseDir(path);
+	}
 }
