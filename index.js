@@ -7,6 +7,7 @@ module.exports = {
 	md5,
 	sha256,
 	sha512,
+	timeiso,
 };
 
 
@@ -42,3 +43,12 @@ function sha512(data, hmackey) {
 	return digest('sha512', data, hmackey);
 }
 
+function timeiso(date, tz=null, len=-5) {
+	const ts = (!date || isNaN(+date))? Date.now(): +date;
+	tz = (tz===0 || tz && !isNaN(+tz))? +tz: -new Date().getTimezoneOffset()/60;
+	let str = new Date(ts + tz*3600e3).toJSON();
+	if(!str) return '';
+	if (len != 'h') str = str.replace('T',' ');
+	len = +len || +{y:4,m:7,d:10,h:13,M:16,s:-5,S:-1,sss:-1}[len] || -5;
+	return str.slice(0, Math.min(len, str.length-1));
+}
