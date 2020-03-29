@@ -14,6 +14,7 @@ module.exports = {
 	$log,
 	fileByLines,
 	traverseDir,
+	excelCsv,
 };
 
 
@@ -89,4 +90,15 @@ function *traverseDir(parent) {
 		yield {path, name, isdir, parent};
 		if (isdir) yield *traverseDir(path);
 	}
+}
+
+function excelCsv(file, list, headers) {
+	if (!Array.isArray(list[0])) {
+		const keys = Object.keys(list[0]);
+		headers = headers || keys;
+		list = list.map(row => headers.map(key=>row[key]));
+	}
+	if (headers) list = [headers, ...list];
+	const csv = list.map(row => row.join('\t')).join('\r\n');
+	fs.writeFileSync(file, '\uFEFF'+csv, 'utf16le');
 }

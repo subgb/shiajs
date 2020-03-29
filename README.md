@@ -29,3 +29,8 @@ Traverse a folder recursively.
 ```js
 for (const f of traverseDir('FOLDER')) console.log(f);
 ```
+
+### excelCsv(file, list, headers)
+`file` is the csv path to write;
+`list` is a list of list, or a list of object;
+`headers` is table headers, can ignore.
