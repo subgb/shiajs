@@ -18,5 +18,8 @@ ISO 8601 format datetime.
 `tz` is the timezone, or use local timesozne if it is not a number;
 `len` can be a number or date directive.
 
+### $log
+console.log starts with time.
+
 ### fileByLines(file, cbLine)
 Call cbLine() every lines of the file, return promise.

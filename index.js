@@ -9,6 +9,7 @@ module.exports = {
 	sha256,
 	sha512,
 	timeiso,
+	$log,
 	fileByLines,
 };
 
@@ -52,6 +53,17 @@ function timeiso(date, tz=null, len=-5) {
 	if (len != 'h') str = str.replace('T',' ');
 	len = +len || +{y:4,m:7,d:10,h:13,M:16,s:-5,S:-1,sss:-1}[len] || -5;
 	return str.slice(0, Math.min(len, str.length-1));
+}
+
+function $log(...args) {
+	const now = `[${timeiso().slice(5)}]`;
+	if (typeof args[0]==='string') {
+		args[0] = now + ' ' + args[0];
+	}
+	else {
+		args.unshift(now);
+	}
+	console.log(...args);
 }
 
 function fileByLines(file, cbLine) {
