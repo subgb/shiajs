@@ -15,6 +15,7 @@ module.exports = {
 	fileByLines,
 	traverseDir,
 	excelCsv,
+	urlJoin,
 };
 
 
@@ -101,4 +102,12 @@ function excelCsv(file, list, headers) {
 	if (headers) list = [headers, ...list];
 	const csv = list.map(row => row.join('\t')).join('\r\n');
 	fs.writeFileSync(file, '\uFEFF'+csv, 'utf16le');
+}
+
+function urlJoin(host, path='/') {
+	host = /:\/\//.test(host)? host: 'http://'+host;
+	if (host.endsWith('/')) host = host.slice(0,-1);
+	if (!path.startsWith('/')) path = '/'+path;
+	if (path=='/') path='';
+	return host+path;
 }

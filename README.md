@@ -34,3 +34,5 @@ for (const f of traverseDir('FOLDER')) console.log(f);
 `file` is the csv path to write;
 `list` is a list of list, or a list of object;
 `headers` is table headers, can ignore.
+
+### urlJoin(host, path='/') 
