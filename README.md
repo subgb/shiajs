@@ -59,3 +59,22 @@ push.error(new Error('push an error'));
 const group = new QGroup(['name1', 'code1'], ['name2', 'code2']);
 group.info('info to group').error('push error to group');
 ```
+
+
+-----
+
+## IFTTT class
+
+Send push notification to IFTTT app.
+
+```js
+const {IFTTT} = require('shiajs/ifttt');
+const push = new IFTTT('token');
+const push2 = new IFTTT('token2', 'default_event_name');
+push.log('push some log'); // push.info() is the same
+push.error(new Error('push an error'));
+push.send({
+    value1: 'text1',
+    value2: 'text2',
+}, 'event_name');
+```
