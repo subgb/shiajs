@@ -36,3 +36,8 @@ for (const f of traverseDir('FOLDER')) console.log(f);
 `headers` is table headers, can ignore.
 
 ### urlJoin(host, path='/') 
+
+### asyncPool(list, worker, size=10, showError=false)
+Async call `worker(list[idx], idx, list, label)` every item of `list` parallelly.
+`size` is the thread pool size;
+`showError` can be true, false, or an async function.

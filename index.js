@@ -111,3 +111,30 @@ function urlJoin(host, path='/') {
 	if (path=='/') path='';
 	return host+path;
 }
+
+function asyncPool(list, worker, size=10, showError=false) {
+	size = Math.max(1, Math.min(999, list.length, size));
+	const prefix = '$'+(Math.random()).toString(36).slice(2,5).toUpperCase()+'-';
+	let index = 0;
+	const thread = async id => {
+		const label = prefix + String(id+1001).slice(-3);
+		while (true) {
+			const current = index++;
+			if (list.length <= current) return;
+			try {
+				await worker(list[current], current, list, label);
+			}
+			catch (e) {
+				if (showError===true){
+					$log(`ERROR ${current} [${label}] ${e.message}`);
+				}
+				else if (typeof showError==='function') {
+					await showError(list[current], current, list, label);
+				}
+			}
+		}
+	};
+	return Promise.all([...Array(size)].map(
+		(x,i) => thread(i).catch(e=>$log(e))
+	));
+}
