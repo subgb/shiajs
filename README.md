@@ -17,3 +17,6 @@ ISO 8601 format datetime.
 `date` can be a Date object or timestamp (milliseconds), otherwise as now;
 `tz` is the timezone, or use local timesozne if it is not a number;
 `len` can be a number or date directive.
+
+### fileByLines(file, cbLine)
+Call cbLine() every lines of the file, return promise.

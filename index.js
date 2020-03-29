@@ -1,4 +1,5 @@
 const crypto = require('crypto');
+const readline = require('readline');
 
 module.exports = {
 	delay,
@@ -8,6 +9,7 @@ module.exports = {
 	sha256,
 	sha512,
 	timeiso,
+	fileByLines,
 };
 
 
@@ -50,4 +52,15 @@ function timeiso(date, tz=null, len=-5) {
 	if (len != 'h') str = str.replace('T',' ');
 	len = +len || +{y:4,m:7,d:10,h:13,M:16,s:-5,S:-1,sss:-1}[len] || -5;
 	return str.slice(0, Math.min(len, str.length-1));
+}
+
+function fileByLines(file, cbLine) {
+	const rl = readline.createInterface({
+		input: fs.createReadStream(file),
+		crlfDelay: Infinity,
+	});
+	rl.on('line', cbLine);
+	return new Promise(resolve => {
+		rl.on('close', resolve);
+	});
 }
