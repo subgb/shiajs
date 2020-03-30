@@ -44,9 +44,21 @@ Async call `worker(list[idx], idx, list, label)` every item of `list` parallelly
 
 
 -----
+# Push Notification
+This return an instance of the QPush or IFTTT class based on the env variable PUSH_TOKEN.
 
-## QPush & QGroup class
+```js
+const push = require('shiajs/push');
+push.log('push some log');
+```
 
+Put PUSH_TOKEN on the /etc/environment for global use:
+```
+PUSH_TOKEN="qpush:name:code"
+# PUSH_TOKEN="ifttt:token_key:event"
+```
+
+### QPush & QGroup class
 Send push notification to QPush app for iOS.
 
 ```js
@@ -60,11 +72,7 @@ const group = new QGroup(['name1', 'code1'], ['name2', 'code2']);
 group.info('info to group').error('push error to group');
 ```
 
-
------
-
-## IFTTT class
-
+### IFTTT class
 Send push notification to IFTTT app.
 
 ```js
