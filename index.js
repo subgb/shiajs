@@ -16,6 +16,7 @@ module.exports = {
 	traverseDir,
 	excelCsv,
 	urlJoin,
+	asyncPool,
 };
 
 
