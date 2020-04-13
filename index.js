@@ -125,12 +125,12 @@ function asyncPool(list, worker, size=10, showError=false) {
 			try {
 				await worker(list[current], current, list, label);
 			}
-			catch (e) {
+			catch (err) {
 				if (showError===true){
-					$log(`ERROR ${current} [${label}] ${e.message}`);
+					$log(`ERROR ${current} [${label}] ${err.message}`);
 				}
 				else if (typeof showError==='function') {
-					await showError(list[current], current, list, label);
+					await showError(err, list[current], current, list, label);
 				}
 			}
 		}
