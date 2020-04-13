@@ -86,3 +86,16 @@ push.send({
     value2: 'text2',
 }, 'event_name');
 ```
+
+
+-----
+# Stopwatch class
+```js
+const Stopwatch = require('shiajs/stopwatch');
+const sw = new Stopwatch();
+// ...
+sw.tap('label');
+// ...
+const elapse1 = sw.tap();
+console.log(elapse1, sw.get('label'), sw.toString());
+```
