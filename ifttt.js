@@ -1,4 +1,4 @@
-const rp = require('request-promise');
+const fetch = require('node-fetch');
 const {$log, timeiso} = require('.');
 
 class IFTTT {
@@ -13,12 +13,17 @@ class IFTTT {
 	async send(body, event) {
 		event = event || this.event || 'default';
 		try {
-			return await rp({
-				json: true,
+			const res = await fetch(`https://maker.ifttt.com/trigger/${event}/with/key/${this.token}`, {
+				timeout: 8e3,
 				method: 'POST',
-				url: `https://maker.ifttt.com/trigger/${event}/with/key/${this.token}`,
-				body,
+				headers: {'Content-Type': 'application/json'},
+				body: JSON.stringify(body),
 			});
+			const text = await res.text();
+			if (!res.ok) {
+				throw new Error(`http ${res.status}: ${text}`);
+			}
+			return text;
 		}
 		catch(e) {
 			$log('[IFTTT Error]', e.message);
