@@ -9,7 +9,6 @@
   "author": "subns",
   "license": "ISC",
   "dependencies": {
-    "request": "^2.88.2",
-    "request-promise": "^4.2.5"
+    "node-fetch": "^2.6.0"
   }
 }
