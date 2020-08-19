@@ -1,4 +1,5 @@
-const rp = require('request-promise');
+const fetch = require('node-fetch');
+const {URLSearchParams} = require('url');
 const {$log, timeiso} = require('.');
 
 class QPush {
@@ -14,17 +15,21 @@ class QPush {
 
 	async send(data) {
 		try {
-			const body = await rp({
-				json: true,
+			const res = await fetch('https://qpush.me/pusher/push_site/', {
+				timeout: 8e3,
 				method: 'POST',
-				url: 'https://qpush.me/pusher/push_site/',
-				form: {
+				body: new URLSearchParams({
 					...this.auth,
 					sig: '',
 					//cache: false,
 					...data,
-				},
+				}),
 			});
+			if (!res.ok) {
+				const body = await res.text();
+				throw new Error(`http ${res.status}: ${body}`);
+			}
+			const body = await res.json();
 			if (body && body.error) throw new Error(body.error);
 			return body;
 		}
