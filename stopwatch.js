@@ -21,12 +21,12 @@ module.exports = class Stopwatch {
 		return this.list[label].elapse;
 	}
 
-	toString() {
-		const list = this.list.map(x => `${x.label}:${x.elapse.toFixed(3)}s`);
+	toString(digits=3) {
+		const list = this.list.map(x => `${x.label}:${x.elapse.toFixed(digits)}s`);
 		let str = list.join(' ');
 		if (list.length>1) {
 			const all = (this.last-this.start)/1000;
-			str += ` all:${all.toFixed(3)}s`;
+			str += ` all:${all.toFixed(digits)}s`;
 		}
 		return '{'+str+'}';
 	}
