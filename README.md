@@ -90,6 +90,7 @@ push.send({
 
 -----
 # Stopwatch class
+
 ```js
 const Stopwatch = require('shiajs/stopwatch');
 const sw = new Stopwatch();
@@ -97,5 +98,17 @@ const sw = new Stopwatch();
 sw.tap('label');
 // ...
 const elapse1 = sw.tap();
-console.log(elapse1, sw.get('label'), sw.toString());
+console.log(elapse1, sw.get('label'), sw.toString(3));
+```
+
+
+-----
+# Persist Ojbect
+Auto save object to a file while changed.
+
+```js
+const Persist = require('shiajs/persist');
+const config = Persist('/data/mypath/myconfig.json', /*default value*/);
+config.foo = 'bar'; // will auto save to the file
+console.log(config.foo);
 ```
