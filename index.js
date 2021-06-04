@@ -13,6 +13,7 @@ module.exports = {
 	timeiso,
 	$log,
 	fileByLines,
+	fileLinesMap,
 	traverseDir,
 	excelCsv,
 	urlJoin,
@@ -35,7 +36,7 @@ function promiseAny(iterable) {
 function digest(algorithm, data, hmackey) {
 	const cr = hmackey? crypto.createHmac(algorithm, hmackey):
 		crypto.createHash(algorithm);
-	cr.update(data, 'utf8');
+	cr.update(data);
 	return cr.digest('hex');
 }
 
@@ -72,7 +73,7 @@ function $log(...args) {
 	console.log(...args);
 }
 
-function fileByLines(file, cbLine) {
+async function fileByLines(file, cbLine) {
 	const rl = readline.createInterface({
 		input: fs.createReadStream(file),
 		crlfDelay: Infinity,
@@ -81,6 +82,13 @@ function fileByLines(file, cbLine) {
 	return new Promise(resolve => {
 		rl.on('close', resolve);
 	});
+}
+
+async function fileLinesMap(file, cbLine) {
+	const list = [];
+	return fileByLines(file, line => {
+		list.push(cbLine(line));
+	}).then(() => list);
 }
 
 function *traverseDir(parent) {
@@ -113,7 +121,7 @@ function urlJoin(host, path='/') {
 	return host+path;
 }
 
-function asyncPool(list, worker, size=10, showError=false) {
+async function asyncPool(list, worker, size=10, showError=false) {
 	size = Math.max(1, Math.min(999, list.length, size));
 	const prefix = '$'+(Math.random()).toString(36).slice(2,5).toUpperCase()+'-';
 	let index = 0;

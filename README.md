@@ -1,4 +1,4 @@
-### delay(ms)
+### async delay(ms)
 
 ### promiseAny(iterable)
 Any promise fulfills -> resolve(value);
@@ -21,8 +21,11 @@ ISO 8601 format datetime.
 ### $log(...)
 console.log starts with time.
 
-### fileByLines(file, cbLine)
+### async fileByLines(file, cbLine)
 Call cbLine() every lines of the file, return promise.
+
+### async fileLinesMap(file, cbLine)
+Create an array by running every lines of the file thru cbLine().
 
 ### \*traverseDir(parent)
 Traverse a folder recursively.
@@ -37,7 +40,7 @@ for (const f of traverseDir('FOLDER')) console.log(f);
 
 ### urlJoin(host, path='/') 
 
-### asyncPool(list, worker, size=10, showError=false)
+### async asyncPool(list, worker, size=10, showError=false)
 Async call `worker(list[idx], idx, list, label)` every item of `list` parallelly.
 `size` is the thread pool size;
 `showError` can be true, false, or an async function `showError(err, list[idx], idx, list, label)`.
