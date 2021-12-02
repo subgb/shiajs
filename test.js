@@ -1,3 +1,4 @@
+const ProxyAgent = require('proxy-agent');
 const sjs = require('.');
 
 const push = require('./push')

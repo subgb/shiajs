@@ -48,7 +48,7 @@ Async call `worker(list[idx], idx, list, label)` every item of `list` parallelly
 
 -----
 # Push Notification
-This return an instance of the QPush or IFTTT class based on the env variable PUSH_TOKEN.
+This return an instance of the QPush, IFTTT or Telegram class based on the env variable PUSH_TOKEN.
 
 ```js
 const push = require('shiajs/push');
@@ -59,6 +59,7 @@ Put PUSH_TOKEN on the /etc/environment for global use:
 ```
 PUSH_TOKEN="qpush:name:code"
 # PUSH_TOKEN="ifttt:token_key:event"
+# PUSH_TOKEN="tg:bot_id:bot_token:chat_id"
 ```
 
 ### QPush & QGroup class
@@ -88,6 +89,18 @@ push.send({
     value1: 'text1',
     value2: 'text2',
 }, 'event_name');
+```
+
+### Telegram class
+Send push notification to Telegram app.
+```js
+const {Telegram} = require('shiajs/telegram');
+const tg = new Telegram('123456789', 'token', 'chat_id_1');
+tg.setChatIds('chat_id_1', 'chat_id_2', 'chat_id_3'); // push to multi
+tg.agent = new ProxyAgent('socks5h://127.0.0.1:1080'); // use socks proxy
+tg.log('push some log'); // tg.info() is the same
+tg.error(new Error('push an error'));
+tg.showMessages(); // received messages in bot
 ```
 
 
