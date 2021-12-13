@@ -128,3 +128,20 @@ const config = Persist('/data/mypath/myconfig.json', /*default value*/);
 config.foo = 'bar'; // will auto save to the file
 console.log(config.foo);
 ```
+
+
+-----
+# Promise Chain
+
+```js
+const PromiseChain = require('./promisechain')
+const chain = new PromiseChain();
+chain.add(fetchPage, 1);
+chain.wait(5000).add(fetchPage.bind(null), 2)
+chain.add(() => fetchPage(3)).wait(3000).add(() => {
+    return fetchPage(4);
+});
+ws.on('message', data => {
+    chain.add(doSomething, data).wait(1000);
+});
+```
