@@ -135,7 +135,7 @@ console.log(config.foo);
 Run async action one by one.
 
 ```js
-const PromiseChain = require('./promisechain')
+const PromiseChain = require('shiajs/promisechain')
 const chain = new PromiseChain();
 chain.add(fetchPage, 1);
 chain.wait(5000).add(fetchPage.bind(null), 2)
@@ -153,7 +153,7 @@ ws.on('message', data => {
 Compute running sum of the last n items in a sliding window.
 
 ```js
-const RunningSum = require('./runningsum')
+const RunningSum = require('shiajs/runningsum')
 const rsum = new RunningSum(10); // window size
 rsum.add(5).add(12).add(8);
 ws.on('message', data => {
