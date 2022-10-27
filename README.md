@@ -154,10 +154,11 @@ Deferred promise with timeout.
 
 ```js
 const Deferred = require('shiajs/deferred')
-const d = new Deferred(5000); // timeout error after 5s
-await d.promise;
-const {promise, resolve} = new Deferred(); // no timeout
-await promise
+const d = new Deferred();
+await d.timeout(3000) // promise with timeout error after 3s
+await d.promise; // no timeout
+d.resolve(value);
+d.reject(new Error('error'));
 ```
 
 

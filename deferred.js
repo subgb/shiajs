@@ -1,9 +1,13 @@
 module.exports = class Deferred {
-	constructor(timeout) {
+	constructor() {
 		this.promise = new Promise((resolve, reject) => {
 			this.resolve = resolve;
 			this.reject = reject;
-			if (timeout) setTimeout(()=>reject(new Error('deferred timeout')), timeout);
 		});
+	}
+
+	timeout(ms) {
+		if (ms) setTimeout(() => this.reject(new Error('deferred timeout')), ms);
+		return this.promise;
 	}
 }
