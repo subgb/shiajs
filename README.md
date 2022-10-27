@@ -149,6 +149,19 @@ ws.on('message', data => {
 
 
 -----
+# Deferred Promise
+Deferred promise with timeout.
+
+```js
+const Deferred = require('shiajs/deferred')
+const d = new Deferred(5000); // timeout error after 5s
+await d.promise;
+const {promise, resolve} = new Deferred(); // no timeout
+await promise
+```
+
+
+-----
 # Running Sum
 Compute running sum of the last n items in a sliding window.
 
