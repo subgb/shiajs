@@ -128,6 +128,10 @@ const config = Persist('/data/mypath/myconfig.json', /*default value*/);
 config.foo = 'bar'; // will auto save to the file
 console.log(config.foo);
 ```
+```js
+const config = require('shiajs/persist').tmp('filename-in-tmp-dir.json');
+config.save = void 0;
+```
 
 
 -----
