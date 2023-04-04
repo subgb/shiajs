@@ -42,6 +42,7 @@ for (const f of traverseDir('FOLDER')) console.log(f);
 
 ### async asyncPool(list, worker, size=10, showError=false)
 Async call `worker(list[idx], idx, list, label)` every item of `list` parallelly.
+`worker` can return an `Error` instance to abort the thread;
 `size` is the thread pool size;
 `showError` can be true, false, or an async function `showError(err, list[idx], idx, list, label)`.
 

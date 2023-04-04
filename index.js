@@ -131,7 +131,11 @@ async function asyncPool(list, worker, size=10, showError=false) {
 			const current = index++;
 			if (list.length <= current) return;
 			try {
-				await worker(list[current], current, list, label);
+				const abort = await worker(list[current], current, list, label);
+				if (abort instanceof Error) {
+					$log(`ABORT ${current} [${label}] ${abort.message}`);
+					return abort
+				}
 			}
 			catch (err) {
 				if (showError===true){
