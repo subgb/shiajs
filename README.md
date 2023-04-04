@@ -120,17 +120,22 @@ console.log(elapse1, sw.get('label'), sw.toString(3));
 
 -----
 # Persist Ojbect
-Auto save object to a file while changed.
+Auto save the object to a file when top-level property are changed.
 
 ```js
 const Persist = require('shiajs/persist');
-const config = Persist('/data/mypath/myconfig.json', /*default value*/);
+const config = Persist('/data/mypath/myconfig.json', {
+    defaultValue: [123],
+    state: 'init',
+});
 config.foo = 'bar'; // will auto save to the file
 console.log(config.foo);
 ```
 ```js
-const config = require('shiajs/persist').tmp('filename-in-tmp-dir.json');
-config.save = void 0;
+const Persist = require('shiajs/persist');
+const config = Persist.tmp('filename-in-tmp-dir.json', { node: {} });
+config.node.name = 'master'; // not top-level
+config.save = void 0; // top-level
 ```
 
 

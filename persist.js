@@ -7,7 +7,8 @@ module.exports = Persist;
 function Persist(file, init) {
 	const store = fs.existsSync(file)
 		? JSON.parse(fs.readFileSync(file, 'utf8'))
-		: {...init};
+		: {};
+	setDefault(store, init);
 
 	const save = () => {
 		timer = null;
@@ -25,7 +26,17 @@ function Persist(file, init) {
 	});
 }
 
-Persist.tmp = function(filename) {
+Persist.tmp = function(filename, init) {
 	const file = path.join(os.tmpdir(), filename);
-	return Persist(file);
+	return Persist(file, init);
+}
+
+function setDefault(obj, init) {
+	if (Object.prototype.toString.call(obj)!='[object Object]') return;
+	if (Object.prototype.toString.call(init)!='[object Object]') return;
+	for (const key in init) {
+		if (!init.hasOwnProperty(key)) continue;
+		if (!(key in obj)) obj[key] = init[key];
+		else setDefault(obj[key], init[key]);
+	}
 }
