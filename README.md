@@ -120,7 +120,7 @@ console.log(elapse1, sw.get('label'), sw.toString(3));
 
 
 -----
-# Persist Ojbect
+# Persist Object
 Auto save the object to a file when top-level property are changed.
 
 ```js
