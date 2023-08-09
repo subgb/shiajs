@@ -38,7 +38,9 @@ for (const f of traverseDir('FOLDER')) console.log(f);
 `list` is a list of list, or a list of object;
 `headers` is table headers, can ignore.
 
-### urlJoin(host, path='/') 
+### urlJoin(host, path='/')
+
+### parseProxyList(proxiesStr)
 
 ### async asyncPool(list, worker, size=10, showError=false)
 Async call `worker(list[idx], idx, list, label)` every item of `list` parallelly.

@@ -17,6 +17,7 @@ module.exports = {
 	traverseDir,
 	excelCsv,
 	urlJoin,
+	parseProxyList,
 	asyncPool,
 };
 
@@ -119,6 +120,17 @@ function urlJoin(host, path='/') {
 	if (!path.startsWith('/')) path = '/'+path;
 	if (path=='/') path='';
 	return host+path;
+}
+
+function parseProxyList(proxiesStr) {
+	return (proxiesStr||'').split(/[\s,;]+/).filter(x=>x.length).map(x => {
+		if (x==='null') return null;
+		if (x.startsWith('://')) x='socks5h'+x;
+		if (/:\/\//.test(x)) return x.replace(/:\/\/:/, '://127.0.0.1:');
+		if (/^:?(\d{2,5})$/.test(x)) return 'socks5h://127.0.0.1:'+RegExp.$1;
+		if (/...:\d{2,5}$/.test(x)) return 'socks5h://'+x;
+		return x
+	});
 }
 
 async function asyncPool(list, worker, size=10, showError=false) {
