@@ -12,7 +12,7 @@ class Telegram {
 
 	setChatIds(...ids) {
 		if (Array.isArray(ids[0])) ids=ids[0];
-		this.chatIds = ids.filter(x=>/^\d+$/.test(x));
+		this.chatIds = ids.filter(x=>/^-?\d+$/.test(x));
 	}
 
 	async send(body) {
